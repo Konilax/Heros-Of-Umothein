@@ -3,16 +3,19 @@ package com.konilax.hou;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 public class HerosOfUmothein extends Canvas implements Runnable {
 
     public static final int WIDTH = 300;
     public static final int HEIGHT = WIDTH / 16 * 9;
+    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     public static final int SCALE = 3;
-
     private Thread thread;
     private JFrame frame;
     private boolean runnning = false;
+    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
     public HerosOfUmothein() {
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
