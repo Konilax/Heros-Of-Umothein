@@ -29,19 +29,6 @@ public class HerosOfUmothein extends Canvas implements Runnable {
         frame = new JFrame();
     }
 
-    public static void main(String[] args) {
-        HerosOfUmothein game = new HerosOfUmothein();
-        game.frame.setResizable(false);
-        game.frame.setTitle("Heros of Umothein | Pre-Alpha 0.0.1a");
-        game.frame.add(game);
-        game.frame.pack();
-        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.frame.setLocationRelativeTo(null);
-        game.frame.setVisible(true);
-
-        game.start();
-    }
-
     public synchronized void start() {
         runnning = true;
         thread = new Thread(this, "Heros of Umothein");
@@ -77,12 +64,31 @@ public class HerosOfUmothein extends Canvas implements Runnable {
             return;
         }
 
+        screen.render();
+
+        for (int i = 0; i < pixels.length; i++) {
+            pixels[i] = screen.pixels[i];
+        }
+
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.dispose();
         bs.show();
 
     }
+
+    public static void main(String[] args) {
+        HerosOfUmothein game = new HerosOfUmothein();
+        game.frame.setResizable(false);
+        game.frame.setTitle("Heros of Umothein | Pre-Alpha 0.0.1a");
+        game.frame.add(game);
+        game.frame.pack();
+        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.frame.setLocationRelativeTo(null);
+        game.frame.setVisible(true);
+
+        game.start();
+    }
+
 
 }
