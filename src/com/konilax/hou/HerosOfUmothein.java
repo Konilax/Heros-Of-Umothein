@@ -64,11 +64,10 @@ public class HerosOfUmothein extends Canvas implements Runnable {
             return;
         }
 
+        screen.clear();
         screen.render();
 
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = screen.pixels[i];
-        }
+        System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
 
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
@@ -83,12 +82,11 @@ public class HerosOfUmothein extends Canvas implements Runnable {
         game.frame.setTitle("Heros of Umothein | Pre-Alpha 0.0.1a");
         game.frame.add(game);
         game.frame.pack();
-        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         game.frame.setLocationRelativeTo(null);
         game.frame.setVisible(true);
 
         game.start();
     }
-
 
 }
