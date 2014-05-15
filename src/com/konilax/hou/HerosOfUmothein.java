@@ -2,6 +2,7 @@ package com.konilax.hou;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class HerosOfUmothein extends Canvas implements Runnable {
 
@@ -18,6 +19,19 @@ public class HerosOfUmothein extends Canvas implements Runnable {
         setPreferredSize(size);
 
         frame = new JFrame();
+    }
+
+    public static void main(String[] args) {
+        HerosOfUmothein game = new HerosOfUmothein();
+        game.frame.setResizable(false);
+        game.frame.setTitle("Heros of Umothein | Pre-Alpha 0.0.1a");
+        game.frame.add(game);
+        game.frame.pack();
+        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.frame.setLocationRelativeTo(null);
+        game.frame.setVisible(true);
+
+        game.start();
     }
 
     public synchronized void start() {
@@ -37,23 +51,30 @@ public class HerosOfUmothein extends Canvas implements Runnable {
     }
 
     public void run() {
-        while(runnning) {
-
+        while (runnning) {
+            update();
+            render();
         }
 
     }
 
-    public static void main(String[] args) {
-        HerosOfUmothein game = new HerosOfUmothein();
-        game.frame.setResizable(false);
-        game.frame.setTitle("Heros of Umothein | Pre-Alpha 0.0.1a");
-        game.frame.add(game);
-        game.frame.pack();
-        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.frame.setLocationRelativeTo(null);
-        game.frame.setVisible(true);
+    public void update() {
 
-        game.start();
+    }
+
+    public void render() {
+        BufferStrategy bs = getBufferStrategy();
+        if (bs == null) {
+            createBufferStrategy(3);
+            return;
+        }
+
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.dispose();
+        bs.show();
+
     }
 
 }
