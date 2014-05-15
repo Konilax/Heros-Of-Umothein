@@ -1,5 +1,7 @@
 package com.konilax.hou;
 
+import com.konilax.hou.graphics.Screen;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -17,10 +19,13 @@ public class HerosOfUmothein extends Canvas implements Runnable {
     private boolean runnning = false;
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
+    private Screen screen;
+
     public HerosOfUmothein() {
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
 
+        screen = new Screen(WIDTH, HEIGHT);
         frame = new JFrame();
     }
 
