@@ -12,11 +12,14 @@ public class HerosOfUmothein extends Canvas implements Runnable {
 
     public static final int WIDTH = 300;
     public static final int HEIGHT = WIDTH / 16 * 9;
-    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     public static final int SCALE = 3;
+    public static final String TITLE = "Heros of Umothein | Pre-Alpha 0.0.1a";
+
     private Thread thread;
     private JFrame frame;
     private boolean runnning = false;
+
+    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
     private Screen screen;
@@ -46,11 +49,33 @@ public class HerosOfUmothein extends Canvas implements Runnable {
     }
 
     public void run() {
+        long lastTime = System.nanoTime();
+        long timer = System.currentTimeMillis();
+        final double ns = 1000000000.0/ 60.0;
+        double delta = 0;
+        int frames = 0;
+        int updates = 0;
         while (runnning) {
-            update();
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            while(delta >= 1) {
+                update();
+                updates++;
+                delta--;
+            }
             render();
-        }
+            frames++;
 
+            if(System.currentTimeMillis() - timer > 1000) {
+                timer += 1000;
+                frame.setTitle(TITLE + " | UPS: " + updates + " " + " FPS: " + frames);
+                updates = 0;
+                frames = 0;
+            }
+
+        }
+        stop();
     }
 
     public void update() {
@@ -79,7 +104,7 @@ public class HerosOfUmothein extends Canvas implements Runnable {
     public static void main(String[] args) {
         HerosOfUmothein game = new HerosOfUmothein();
         game.frame.setResizable(false);
-        game.frame.setTitle("Heros of Umothein | Pre-Alpha 0.0.1a");
+        game.frame.setTitle(TITLE);
         game.frame.add(game);
         game.frame.pack();
         game.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
